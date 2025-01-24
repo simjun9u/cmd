@@ -1,0 +1,67 @@
+* Robocopy 정리
+  * Dir 입력하면 자동화하는 cmd 작성
+* File 명령어 정리
+  * Ren 정리 
+
+* certutil
+  * 지원 알고리즘: `certutil -hashfile` 
+  * md5(32자리/8자리컷 충돌7만파일)
+  * filename.MD5.ext Rename 
+    * 윈도우 스크립트 (.cmd파일)로 1. 디렉토리 입력하면 2. 해당 디렉토리 파일들의 md5를 알아내고 3. 파일명 rename. abcd.mp3 -> abcd.{md5해시값}.mp3 ... 발전시키기. 
+* 멀티미디어 해시 (메타데이터 수정 있다면. 음악) 
+  * 이미지 Perceptual Hashing (from PIL import Image/import imagehash)  
+  * 오디오 Audio Fingerprinting (pydub, audioread)
+  * 비디오 : 프레임별 특징을 추출(opencv)하거나 오디오 트랙 기반 해싱
+* 파이썬 중복검사 프로그램 
+* FFmpeg AVIF
+ * 프리셋
+* FFmpeg 
+ * 파일자르기
+ * 프리셋 ( 
+ * 2배속 (샤나)
+* opus
+ * 폴더 지정하면 일괄변환하는 명령어 (옵션 숫자 영어(객관식) 입력받기)
+* 메타데이터는 mp3tag 쓰는게 나음 exiftools 부담스러움. 
+* `ffmpeg -i input.aac -metadata title="Song Title" -metadata artist="Artist Name" output.m4a`
+
+
+MP3 파일: ID3 태그를 제외한 오디오 스트림만 사용.
+MP4 파일: 'mdat' 박스(실제 미디어 데이터)를 추출하여 해시 계산.
+`ffmpeg -i input.mp4 -map 0:v:0 -map 0:a:0 -c copy -f mp4 output_no_metadata.mp4` FFmpeg 명령을 사용해 메타데이터를 제거하고 콘텐츠만 추출
+
+
+
+ID3v2.4에서 지원하는 메타데이터 항목
+ID3v2.4는 다양한 프레임(메타데이터 항목)을 정의하며, 주요 메타데이터는 다음과 같습니다:
+
+1. 기본 정보
+프레임 ID	설명	내용
+TIT2	제목	곡 제목 또는 트랙 제목
+TPE1	아티스트	노래의 주요 아티스트
+TALB	앨범/영화 제목	앨범 또는 영화의 이름
+TRCK	트랙 번호	트랙 번호(예: "1/10")
+TYER	발매 연도	트랙의 발매 연도 (ID3v2.3까지 사용)
+TDRC	녹음 날짜	녹음된 날짜(정확한 날짜/시간)
+TCON	장르	음악 장르 (예: Pop, Jazz)
+2. 가수와 참여자 관련
+프레임 ID	설명	내용
+TPE2	앨범 아티스트	앨범의 주요 아티스트
+TPE3	지휘자	곡을 지휘한 사람
+TPE4	리믹서	곡을 리믹스한 사람
+TEXT	작사가	가사를 쓴 사람
+TCOM	작곡가	곡을 작곡한 사람
+3. 파일 및 트랙 정보
+프레임 ID	설명	내용
+TLEN	길이	트랙 길이(밀리초 단위)
+TSSE	인코딩 소프트웨어	트랙을 인코딩한 소프트웨어 이름
+TSRC	ISRC 코드	트랙의 국제 표준 녹음 코드
+TOFN	원본 파일명	원래 파일 이름
+4. 앨범 표지 및 미디어 관련
+프레임 ID	설명	내용
+APIC	앨범 표지 이미지	앨범 표지의 바이너리 이미지 데이터
+GEOB	일반 객체	바이너리 데이터 (예: 파일 첨부)
+5. 추가 메타데이터
+프레임 ID	설명	내용
+COMM	댓글	트랙에 대한 사용자 정의 댓글
+USLT	가사	곡의 전체 가사
+TXXX	사용자 정의 텍스트	사용자 정의 메타데이터 텍스트
